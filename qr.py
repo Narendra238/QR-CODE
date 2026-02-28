@@ -20,7 +20,7 @@ qr.make(fit=True)
 
 img_qr = qr.make_image(fill_color="black", back_color="white").convert('RGB')
 
-# Buka logo
+# Buka logo yang ingin ditempelkan pada QR Code
 logo = Image.open("logo.png")
 
 # Resize logo (misal 1/4 ukuran QR)
@@ -31,8 +31,8 @@ logo = logo.resize((logo_size, logo_size))
 # Posisi kiri atas
 posisi = (30, 27)
 
-# Tempel logo
+# Tempel logo pada QR Code
 img_qr.paste(logo, posisi, mask=logo if logo.mode == 'RGBA' else None)
 
-# Simpan hasil
+# Simpan hasil QR Code dengan logo
 img_qr.save("Hasil_logo.png")
