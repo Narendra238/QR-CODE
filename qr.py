@@ -1,11 +1,9 @@
 # Importing library
-from operator import pos
-
 import qrcode
 from PIL import Image
  
 # Data to be encoded == Link yg ingin dibuat QR Code nya
-data = 'https://s.id/LINK'
+data = 'https://s.id/LINKGOOGLE'
 
 # Membuat QR dengan error correction tinggi
 qr = qrcode.QRCode(
