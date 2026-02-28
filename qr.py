@@ -1,36 +1,42 @@
-# Importing library
+# libary yang digunakan untuk membuat QR code
 import qrcode
-from PIL import Image
- 
-# Data to be encoded == Link yg ingin dibuat QR Code nya
-data = 'https://s.id/LINKGOOGLE'
+from PIL import Image, ImageDraw
 
-# Membuat QR dengan error correction tinggi
+data = "https://s.id/LINK"
+
+# Buat QR dengan error correction tinggi
 qr = qrcode.QRCode(
     version=None,
     error_correction=qrcode.constants.ERROR_CORRECT_H,
     box_size=20,
-    border=2,
+    border=3,
 )
 
 qr.add_data(data)
 qr.make(fit=True)
 
-img_qr = qr.make_image(fill_color="black", back_color="white").convert('RGB')
+qr_img = qr.make_image(fill_color="black", back_color="white").convert("RGB")
 
-# Buka logo yang ingin ditempelkan pada QR Code
-logo = Image.open("logo.png")
+# Ukuran QR
+qr_w, qr_h = qr_img.size
 
-# Resize logo (misal 1/4 ukuran QR)
-qr_width, qr_height = img_qr.size
-logo_size = qr_width // 4
+# Ukuran area logo
+logo_size = qr_w // 5
+
+# Posisi tengah
+x = (qr_w - logo_size) // 2
+y = (qr_h - logo_size) // 2
+
+# Buat kotak putih di tengah (clear area)
+draw = ImageDraw.Draw(qr_img)
+draw.rectangle((x, y, x + logo_size, y + logo_size), fill="white")
+
+# Buka logo (PNG transparan)
+logo = Image.open("logo.png").convert("RGBA")
 logo = logo.resize((logo_size, logo_size))
 
-# Posisi kiri atas
-posisi = (30, 27)
+# Tempel logo di tengah
+qr_img.paste(logo, (x, y), logo)
 
-# Tempel logo pada QR Code
-img_qr.paste(logo, posisi, mask=logo if logo.mode == 'RGBA' else None)
-
-# Simpan hasil QR Code dengan logo
-img_qr.save("Hasil_logo.png")
+# nama file hasil
+qr_img.save("QR_logo_tengah.png")
