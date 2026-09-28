@@ -39,4 +39,4 @@ logo = logo.resize((logo_size, logo_size))
 qr_img.paste(logo, (x, y), logo)
 
 # nama file hasil
-qr_img.save("LinkDaftarSC8.png")
+qr_img.save("Output/LinkDaftarSC8.png")
