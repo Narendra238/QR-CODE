@@ -2,7 +2,7 @@
 import qrcode
 from PIL import Image, ImageDraw
 
-data = "https://s.id/LINK"
+data = "https://s.id/FromTheorytoMethod"
 
 # Buat QR dengan error correction tinggi
 qr = qrcode.QRCode(
@@ -39,4 +39,4 @@ logo = logo.resize((logo_size, logo_size))
 qr_img.paste(logo, (x, y), logo)
 
 # nama file hasil
-qr_img.save("QR_logo_tengah.png")
+qr_img.save("LinkDaftarSC8.png")
