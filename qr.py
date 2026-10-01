@@ -1,22 +1,16 @@
 import os
 import qrcode
 from PIL import Image, ImageDraw
-from dotenv import load_dotenv
 
-# Muat variabel dari file .env
-load_dotenv()
+# Input link secara langsung dan dinamis dari user
+link = input("Masukkan link : ").strip()
 
-# Ambil link dari .env (bisa LINK atau link)
-data = (os.getenv("LINK") or os.getenv("link") or "").strip()
+# Validasi agar link tidak kosong
+while not link:
+    print("Error: Link tidak boleh kosong!")
+    link = input("Masukkan link : ").strip()
 
-# Jika di .env kosong / belum diisi, minta user menginputkannya secara interaktif
-if not data:
-    data = input("Link di .env kosong. Masukkan URL/link untuk QR Code: ").strip()
-    if not data:
-        print("Error: Link tidak boleh kosong!")
-        exit(1)
-
-print(f"Membuat QR Code untuk: {data}")
+print(f"Link yang dimasukkan: {link}")
 
 # Input dinamis nama file output dari user
 file_name = input("Masukkan nama file hasil (contoh: LinkBaru): ").strip()
@@ -32,6 +26,8 @@ output_dir = "Output"
 os.makedirs(output_dir, exist_ok=True)
 output_path = os.path.join(output_dir, file_name)
 
+print(f"Membuat QR Code untuk: {link}")
+
 # Buat QR dengan error correction tinggi
 qr = qrcode.QRCode(
     version=None,
@@ -40,7 +36,7 @@ qr = qrcode.QRCode(
     border=3,
 )
 
-qr.add_data(data)
+qr.add_data(link)
 qr.make(fit=True)
 
 qr_img = qr.make_image(fill_color="black", back_color="white").convert("RGB")
@@ -71,4 +67,4 @@ else:
 
 # Simpan hasil QR Code
 qr_img.save(output_path)
-print(f" Berhasil disimpan di: {output_path}")
+print(f" Berhasil disimpan di: {output_path}")
